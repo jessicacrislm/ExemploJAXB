@@ -1,0 +1,6 @@
+com\example\testejaxb\interceptors\Log.class
+com\example\testejaxb\TesteJaxbExecutavel.class
+com\example\testejaxb\jaxb\RemessaJAXB.class
+com\example\testejaxb\jaxb\TesteJAXB.class
+com\example\testejaxb\jaxb\BoletoJAXB.class
+com\example\testejaxb\interceptors\LogInterceptor.class

@@ -2,6 +2,7 @@ package com.example.testejaxb;
 
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -9,10 +10,16 @@ import javax.xml.bind.Marshaller;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
+import com.example.testejaxb.interceptors.Log;
 import com.example.testejaxb.jaxb.BoletoJAXB;
 import com.example.testejaxb.jaxb.RemessaJAXB;
 
+@SpringBootApplication
+@ImportResource("classpath:beans.xml")
+@Log
 public class TesteJaxbExecutavel {
 
 	public static void main(String[] args) {
@@ -20,7 +27,9 @@ public class TesteJaxbExecutavel {
 		boleto.setTipoRegistro("1");
 		boleto.setCodigoServico("1");
 		boleto.setCnpjEmpresa("11111111111111");
-		boleto.setRazaoSocial("Mecanica Jessica");
+		String teste = "tÉstÂndo içù";
+		teste = Normalizer.normalize(teste, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""); 
+		boleto.setRazaoSocial(teste);
 		boleto.setNossoNumero("22222222");
 		
 		BoletoJAXB boleto2 = new BoletoJAXB();
@@ -35,7 +44,8 @@ public class TesteJaxbExecutavel {
 		remessa.getBoletos().add(boleto2);
  		
 		try {
-			Marshaller mars = JAXBContext.newInstance(RemessaJAXB.class).createMarshaller();
+			JAXBContext jc = JAXBContext.newInstance(RemessaJAXB.class);
+			Marshaller mars = jc.createMarshaller();
 			mars.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
 			mars.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.FALSE);
 			mars.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);

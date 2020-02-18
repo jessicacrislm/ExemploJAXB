@@ -4,12 +4,14 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.StringUtils;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class BoletoJAXB {
+@XmlType(name = "", propOrder = { "quebraLinha", "tipoRegistro", "codigoServico", "identificacaoRegistro", "razaoSocial", "cnpjEmpresa", "nossoNumero" })
+public class BoletoJAXB extends TesteJAXB {
 
 	@XmlElement
 	protected String quebraLinha = "\n"; // Boletos tem quebra de linha, consultar o manual
